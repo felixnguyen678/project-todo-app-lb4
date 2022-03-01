@@ -1,0 +1,27 @@
+@startuml
+partition Admin {
+  (*) --> "create project"
+  --> === S1 ===
+  === S1 === --> "update project"
+  === S1 === --> "finish project"
+  === S1 === --> "add task to project"
+  === S1 === --> "add more user to project"
+
+}
+
+partition User #LightSkyBlue {
+  "add task to project" --> "toggle Done task"
+
+}
+
+partition Admin {
+  "toggle Done task" --> === S2 ===
+  "update project" --> === S2 ===
+  "add more user to project" --> === S2 ===
+  --> (*)
+}
+
+"finish project" --> (*)
+
+
+@enduml

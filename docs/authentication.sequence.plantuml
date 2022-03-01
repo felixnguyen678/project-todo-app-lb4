@@ -1,0 +1,9 @@
+
+@startuml
+User -> WebApp: Authentication Request
+WebApp --> User: [user not found] Response Failed
+WebApp --> User: [inactive user] Response Failed
+
+WebApp --> User: [user is admin] Response Admin UI
+WebApp --> User: [user is not] Response Normal User UI
+@enduml

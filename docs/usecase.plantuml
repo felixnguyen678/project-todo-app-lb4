@@ -1,0 +1,18 @@
+
+@startuml
+
+left to right direction
+Admin <|-- User
+(CRUD task) ..> (CRUD my task): include
+(Authenticate) ..> (username and password authenticate): include
+(Authenticate) ..> (social network authenticate): include
+(CRUD project) ..> (add User to Project):  include
+
+Admin --> (Authenticate)
+Admin --> (CRUD task)
+Admin --> (CRUD project)
+Admin --> (CRUD user)
+
+User --> (Authenticate)
+User --> (CRUD my task)
+@enduml
