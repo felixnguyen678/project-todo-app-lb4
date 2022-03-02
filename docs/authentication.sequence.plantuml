@@ -22,7 +22,7 @@ alt#Gold #LightBlue user found
         WebServer --> User --: render User UI
     end
 else #Pink user not found
-    APIServer --> WebServer ++: Authentication failure response
+    APIServer --> WebServer --++: Authentication failure response
     WebServer --> User --: Authentication failure response
 
 end
