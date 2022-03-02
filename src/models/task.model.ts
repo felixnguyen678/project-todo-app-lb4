@@ -34,11 +34,8 @@ export class Task extends Entity {
   @belongsTo(() => User, {name: 'hasOwner'})
   owner: string;
 
-
-  @property({
-    type: 'string',
-  })
-  previousTask?: string;
+  @belongsTo(() => Task, {name: 'isPreviousTaskOf'})
+  previousTask: string;
 
   constructor(data?: Partial<Task>) {
     super(data);
