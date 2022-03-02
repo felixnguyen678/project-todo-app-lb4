@@ -1,9 +1,29 @@
 
 @startuml
-User -> WebApp: Authentication Request
-WebApp --> User: [user not found] Response Failed
-WebApp --> User: [inactive user] Response Failed
+actor User
+boundary WebServer
+control APIServer
+database Database
+User -> WebServer ++: Authentication information
+WebServer -> APIServer --++: Authentication request
+APIServer -> APIServer: VerifyUser
+APIServer -> Database ++: find User
+Database --> APIServer --: data response
+alt#Gold #LightBlue user found
+    APIServer --> WebServer ++: Authentication success response
+    WebServer --> User --: Authentication success response
+    WebServer -> APIServer: get user information
+    APIServer -> Database ++: get user information
+    Database --> APIServer --: data response
+    APIServer --> WebServer ++: data response
+    alt#Gold #LightGreen user is admin
+        WebServer --> User: render Admin UI
+    else #LightYellow user is not admin
+        WebServer --> User --: render User UI
+    end
+else #Pink user not found
+    APIServer --> WebServer ++: Authentication failure response
+    WebServer --> User --: Authentication failure response
 
-WebApp --> User: [user is admin] Response Admin UI
-WebApp --> User: [user is not] Response Normal User UI
+end
 @enduml
