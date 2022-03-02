@@ -1,33 +1,20 @@
 @startuml ERD
 
-' hide the spot
-hide circle
-
-' avoid problems with angled crows feet
-skinparam linetype ortho
-
-entity "Task" as task {
+object "Task" as task {
   *id : string <<generated>>
   *taskName : string
   *createdAt: date
   *isDone: boolean
-  --
-  *previousTask: <<FK>>
-  *owner: <<FK>>
-  *project: <<FK>>
 }
 
-entity "Project" as project {
-  *id : string <<generated>>
-  *projectId: string
+object "Project" as project {
+  *id: string
   *projectName: string
   *createdAt: date
   *finishedAt: date
-  --
-  *members :  <<FK>>
 }
 
-entity "User" as user {
+object "User" as user {
   *id : string <<generated>>
   *username: string
   *fullName: string
@@ -37,8 +24,8 @@ entity "User" as user {
 }
 
 project||..o{ task
-user }o..o{ project
-task }o..|| user
-task |o..o| task
+user }o..o{ project: is member of
+user ||..o{ task: is owner of
+task |o..o| task: is previous task of
 
 @enduml

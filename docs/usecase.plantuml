@@ -2,17 +2,36 @@
 @startuml
 
 left to right direction
-Admin <|-- User
-(CRUD task) ..> (CRUD my task): include
-(Authenticate) ..> (username and password authenticate): include
-(Authenticate) ..> (social network authenticate): include
-(CRUD project) ..> (add User to Project):  include
+(task management) ..> (view and edit my task): <<include>>
+(task management) ..> (create task): <<include>>
+(task management) ..> (edit task): <<include>>
+(task management) ..> (done task): <<include>>
+(task management) ..> (delete task): <<include>>
 
-Admin --> (Authenticate)
-Admin --> (CRUD task)
-Admin --> (CRUD project)
-Admin --> (CRUD user)
+(project management) ..> (create project): <<include>>
+(project management) ..> (update project information): <<include>>
+(project management) ..> (add user to project): <<include>>
+(project management) ..> (finish project): <<include>>
 
-User --> (Authenticate)
-User --> (CRUD my task)
+(user management) ..> (create user): <<include>>
+(user management) ..> (disable user): <<include>>
+
+(edit profile)..> (update profile information): <<include>>
+(edit profile)..> (change password): <<include>>
+(edit profile)..> (delete account): <<include>>
+
+(sign in) ..> (sign in by social network): <<extend>>
+
+(sign up) ..> (sign up by social network): <<extend>>
+
+User --> (sign in)
+User --> (sign up)
+User --> (view and edit my task)
+User --> (edit profile)
+
+Admin --|> User
+
+Admin --> (task management)
+Admin --> (user management)
+Admin --> (project management)
 @enduml
