@@ -32,6 +32,6 @@ User --> (edit profile)
 Admin --|> User
 
 Admin --> (task management)
-Admin --> (user management)
+Admin -left-> (user management)
 Admin --> (project management)
 @enduml
