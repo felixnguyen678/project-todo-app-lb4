@@ -1,5 +1,6 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, model, property, hasMany, belongsTo} from '@loopback/repository';
 import {Task} from './task.model';
+import {User} from './user.model';
 
 @model()
 export class Project extends Entity {
@@ -46,6 +47,9 @@ export class Project extends Entity {
 
   @hasMany(() => Task, {keyTo: 'project'})
   tasks: Task[];
+
+  @belongsTo(() => User, {name: 'getCreator'})
+  creator: string;
 
   constructor(data?: Partial<Project>) {
     super(data);

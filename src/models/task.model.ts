@@ -1,7 +1,6 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {TaskStatus} from "../enums";
 import {User} from './user.model';
-import {Task} from './task.model';
 import {Project} from './project.model';
 
 @model()

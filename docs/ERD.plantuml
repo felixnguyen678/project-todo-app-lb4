@@ -53,6 +53,7 @@ User ||-right-o{ ProjectUser
 ProjectUser }o-right-|| Project
 Project||--o{ Task: has
 User ||-down-o{ Task: is owner of
+User ||-down-o{ Task: create
 Task |o--o| Task: is previous task of
 
 @enduml

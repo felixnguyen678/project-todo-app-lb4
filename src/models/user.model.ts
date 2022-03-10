@@ -1,6 +1,7 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Role, UserStatus} from "../enums";
 import {Task} from './task.model';
+import {Project} from './project.model';
 
 @model()
 export class User extends Entity {
@@ -57,6 +58,9 @@ export class User extends Entity {
 
   @hasMany(() => Task, {keyTo: 'creator'})
   createdTasks: Task[];
+
+  @hasMany(() => Project, {keyTo: 'creator'})
+  createdProjects: Project[];
 
   constructor(data?: Partial<User>) {
     super(data);
