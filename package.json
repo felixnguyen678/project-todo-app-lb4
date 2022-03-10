@@ -33,6 +33,7 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
+    "dev": "nodemon",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build"
   },
@@ -60,11 +61,22 @@
   },
   "devDependencies": {
     "@loopback/build": "^8.1.1",
-    "source-map-support": "^0.5.21",
+    "@loopback/eslint-config": "^12.0.3",
     "@loopback/testlab": "^4.1.1",
     "@types/node": "^12.20.46",
-    "@loopback/eslint-config": "^12.0.3",
     "eslint": "^8.10.0",
+    "nodemon": "^2.0.15",
+    "source-map-support": "^0.5.21",
     "typescript": "~4.5.5"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "watch": [
+      "src",
+      ".env"
+    ],
+    "ext": "ts",
+    "exec": "npm run build && npm start"
   }
+
 }
