@@ -1,9 +1,10 @@
 import {inject, Getter} from '@loopback/core';
 import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
 import {MongoDataSource} from '../datasources';
-import {Task, TaskRelations, User} from '../models';
+import {Task, TaskRelations, User, Project} from '../models';
 import {UserRepository} from './user.repository';
 import {TaskRepository} from './task.repository';
+import {ProjectRepository} from './project.repository';
 
 export class TaskRepository extends DefaultCrudRepository<
   Task,
@@ -17,10 +18,14 @@ export class TaskRepository extends DefaultCrudRepository<
 
   public readonly getPreviousTask: BelongsToAccessor<Task, typeof Task.prototype.id>;
 
+  public readonly getProject: BelongsToAccessor<Project, typeof Task.prototype.id>;
+
   constructor(
-    @inject('datasources.mongo') dataSource: MongoDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>, @repository.getter('TaskRepository') protected taskRepositoryGetter: Getter<TaskRepository>,
+    @inject('datasources.mongo') dataSource: MongoDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>, @repository.getter('TaskRepository') protected taskRepositoryGetter: Getter<TaskRepository>, @repository.getter('ProjectRepository') protected projectRepositoryGetter: Getter<ProjectRepository>,
   ) {
     super(Task, dataSource);
+    this.getProject = this.createBelongsToAccessorFor('getProject', projectRepositoryGetter,);
+    this.registerInclusionResolver('getProject', this.getProject.inclusionResolver);
     this.getPreviousTask = this.createBelongsToAccessorFor('getPreviousTask', taskRepositoryGetter,);
     this.registerInclusionResolver('getPreviousTask', this.getPreviousTask.inclusionResolver);
     this.getCreator = this.createBelongsToAccessorFor('getCreator', userRepositoryGetter,);

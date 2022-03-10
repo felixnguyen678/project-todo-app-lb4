@@ -2,3 +2,5 @@ export * from './ping.controller';
 export * from './task-user.controller';
 export * from './user-task.controller';
 export * from './task-task.controller';
+export * from './task-project.controller';
+export * from './project-task.controller';
