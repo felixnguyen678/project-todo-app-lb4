@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import {ProjectTodoAppBackendApplication} from './application';
 
 export async function migrate(args: string[]) {
