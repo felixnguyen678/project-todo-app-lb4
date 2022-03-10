@@ -1,31 +1,55 @@
 @startuml ERD
 
-object "Task" as task {
-  *id : string <<generated>>
+object Task {
+  -id : ObjectID <<generated>>
+  --
+  ~projectId: ObjectID
+  ~owner: ObjectID
+  ~createdBy: ObjectID
+  ~isChildOf: ObjectID
+  --
   *taskName : string
+  *startDate: date
+  *dueDate: date
   *createdAt: date
-  *isDone: boolean
+  *updatedAt: date
+  *doneAt: date
+  *status: "todo | doing | done"
 }
 
-object "Project" as project {
-  *id: string
+object Project {
+  -id: ObjectID
+  --
+  ~createdBy: objectID
+  --
   *projectName: string
+  *description: string
+  *isActive: string
+  *isDeleted: boolean
   *createdAt: date
-  *finishedAt: date
+  *updatedAt: date
 }
 
-object "User" as user {
-  *id : string <<generated>>
+object User {
+  -id : ObjectID <<generated>>
+  --
   *username: string
   *fullName: string
   *password: string
   *status: string
   *role: string
+  *createdAt: date
+  *updatedAt: date
+}
+object ProjectUser {
+  ~project: ObjectID
+  ~user: ObjectID
 }
 
-project||..o{ task
-user }o..o{ project: is member of
-user ||..o{ task: is owner of
-task |o..o| task: is previous task of
+User ||-right-o{ ProjectUser
+ProjectUser }o-right-|| Project
+Project||--o{ Task: has
+User ||-down-o{ Task: is owner of
+Task |o--o| Task: is previous task of
 
 @enduml
