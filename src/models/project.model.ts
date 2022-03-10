@@ -46,6 +46,12 @@ export class Project extends Entity {
   })
   updatedAt?: string;
 
+  @belongsTo(() => User, {name: 'creator'})
+  createdBy: string;
+
+  @hasMany(() => Task)
+  tasks: Task[];
+
   constructor(data?: Partial<Project>) {
     super(data);
   }
