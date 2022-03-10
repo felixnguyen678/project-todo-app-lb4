@@ -29,6 +29,17 @@ export class Task extends Entity {
   dueDate?: string;
 
   @property({
+    type: 'string',
+    default: TaskStatus.TODO,
+  })
+  status?: string;
+
+  @property({
+    type: 'date',
+  })
+  doneAt?: string;
+
+  @property({
     type: 'date',
     default: () => new Date(),
   })
@@ -40,28 +51,11 @@ export class Task extends Entity {
   })
   updatedAt?: string;
 
-  @property({
-    type: 'date',
-  })
-  doneAt?: string;
+  @belongsTo(() => User, {name: 'owner'})
+  ownedBy: string;
 
-  @property({
-    type: 'string',
-    default: TaskStatus.TODO,
-  })
-  status?: string;
-
-  @belongsTo(() => User, {name: 'getOwner'})
-  owner: string;
-
-  @belongsTo(() => User, {name: 'getCreator'})
-  creator: string;
-
-  @belongsTo(() => Task, {name: 'getPreviousTask'})
-  previousTask: string;
-
-  @belongsTo(() => Project, {name: 'getProject'})
-  project: string;
+  @belongsTo(() => User, {name: 'creator'})
+  createdBy: string;
 
   constructor(data?: Partial<Task>) {
     super(data);

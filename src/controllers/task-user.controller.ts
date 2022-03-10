@@ -21,7 +21,7 @@ export class TaskUserController {
   @get('/tasks/{id}/owner', {
     responses: {
       '200': {
-        description: 'User belonging to Task',
+        description: 'owner belonging to Task',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(User)},
@@ -33,13 +33,13 @@ export class TaskUserController {
   async getOwner(
     @param.path.string('id') id: typeof Task.prototype.id,
   ): Promise<User> {
-    return this.taskRepository.getOwner(id);
+    return this.taskRepository.owner(id);
   }
 
   @get('/tasks/{id}/creator', {
     responses: {
       '200': {
-        description: 'User belonging to Task',
+        description: 'creator belonging to Task',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(User)},
@@ -51,6 +51,6 @@ export class TaskUserController {
   async getCreator(
     @param.path.string('id') id: typeof Task.prototype.id,
   ): Promise<User> {
-    return this.taskRepository.getCreator(id);
+    return this.taskRepository.creator(id);
   }
 }

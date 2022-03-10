@@ -26,7 +26,7 @@ export class UserTaskController {
     @repository(UserRepository) protected userRepository: UserRepository,
   ) { }
 
-  @get('/users/{id}/assigned-tasks', {
+  @get('/users/{id}/tasks', {
     responses: {
       '200': {
         description: 'Array of User has many Task',
@@ -38,14 +38,14 @@ export class UserTaskController {
       },
     },
   })
-  async findAssignedTasks(
+  async find(
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<Task>,
   ): Promise<Task[]> {
-    return this.userRepository.assignedTasks(id).find(filter);
+    return this.userRepository.ownedTasks(id).find(filter);
   }
 
-  @post('/users/{id}/assigned-tasks', {
+  @post('/users/{id}/tasks', {
     responses: {
       '200': {
         description: 'User model instance',
@@ -53,7 +53,7 @@ export class UserTaskController {
       },
     },
   })
-  async createAssignedTasks(
+  async create(
     @param.path.string('id') id: typeof User.prototype.id,
     @requestBody({
       content: {
@@ -61,16 +61,16 @@ export class UserTaskController {
           schema: getModelSchemaRef(Task, {
             title: 'NewTaskInUser',
             exclude: ['id'],
-            optional: ['owner']
+            optional: ['ownedBy']
           }),
         },
       },
     }) task: Omit<Task, 'id'>,
   ): Promise<Task> {
-    return this.userRepository.assignedTasks(id).create(task);
+    return this.userRepository.ownedTasks(id).create(task);
   }
 
-  @patch('/users/{id}/assigned-tasks', {
+  @patch('/users/{id}/tasks', {
     responses: {
       '200': {
         description: 'User.Task PATCH success count',
@@ -78,7 +78,7 @@ export class UserTaskController {
       },
     },
   })
-  async patchAssignedTasks(
+  async patch(
     @param.path.string('id') id: string,
     @requestBody({
       content: {
@@ -90,10 +90,10 @@ export class UserTaskController {
     task: Partial<Task>,
     @param.query.object('where', getWhereSchemaFor(Task)) where?: Where<Task>,
   ): Promise<Count> {
-    return this.userRepository.assignedTasks(id).patch(task, where);
+    return this.userRepository.ownedTasks(id).patch(task, where);
   }
 
-  @del('/users/{id}/assigned-tasks', {
+  @del('/users/{id}/tasks', {
     responses: {
       '200': {
         description: 'User.Task DELETE success count',
@@ -101,17 +101,17 @@ export class UserTaskController {
       },
     },
   })
-  async deleteAssignedTasks(
+  async delete(
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(Task)) where?: Where<Task>,
   ): Promise<Count> {
-    return this.userRepository.assignedTasks(id).delete(where);
+    return this.userRepository.ownedTasks(id).delete(where);
   }
 
   @get('/users/{id}/created-tasks', {
     responses: {
       '200': {
-        description: 'Array of User has many Task',
+        description: 'Array created tasks of User',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Task)},
@@ -125,68 +125,5 @@ export class UserTaskController {
     @param.query.object('filter') filter?: Filter<Task>,
   ): Promise<Task[]> {
     return this.userRepository.createdTasks(id).find(filter);
-  }
-
-  @post('/users/{id}/created-tasks', {
-    responses: {
-      '200': {
-        description: 'User model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Task)}},
-      },
-    },
-  })
-  async createCreatedTasks(
-    @param.path.string('id') id: typeof User.prototype.id,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Task, {
-            title: 'NewTaskInUser',
-            exclude: ['id'],
-            optional: ['owner']
-          }),
-        },
-      },
-    }) task: Omit<Task, 'id'>,
-  ): Promise<Task> {
-    return this.userRepository.createdTasks(id).create(task);
-  }
-
-  @patch('/users/{id}/created-tasks', {
-    responses: {
-      '200': {
-        description: 'User.Task PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async patchCreatedTasks(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Task, {partial: true}),
-        },
-      },
-    })
-      task: Partial<Task>,
-    @param.query.object('where', getWhereSchemaFor(Task)) where?: Where<Task>,
-  ): Promise<Count> {
-    return this.userRepository.createdTasks(id).patch(task, where);
-  }
-
-  @del('/users/{id}/created-tasks', {
-    responses: {
-      '200': {
-        description: 'User.Task DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async deleteCreatedTasks(
-    @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Task)) where?: Where<Task>,
-  ): Promise<Count> {
-    return this.userRepository.createdTasks(id).delete(where);
   }
 }

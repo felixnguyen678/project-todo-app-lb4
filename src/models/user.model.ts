@@ -54,17 +54,11 @@ export class User extends Entity {
   })
   updatedAt?: string;
 
-  @hasMany(() => Task, {keyTo: 'owner'})
-  assignedTasks: Task[];
+  @hasMany(() => Task, {keyTo: 'ownedBy'})
+  ownedTasks: Task[];
 
-  @hasMany(() => Task, {keyTo: 'creator'})
+  @hasMany(() => Task, {keyTo: 'createdBy'})
   createdTasks: Task[];
-
-  @hasMany(() => Project, {keyTo: 'creator'})
-  createdProjects: Project[];
-
-  @hasMany(() => ProjectUser, {keyTo: 'user'})
-  projectUsers: ProjectUser[];
 
   constructor(data?: Partial<User>) {
     super(data);
