@@ -1,6 +1,7 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {TaskStatus} from "../enums";
 import {User} from './user.model';
+import {Task} from './task.model';
 
 @model()
 export class Task extends Entity {
@@ -55,6 +56,9 @@ export class Task extends Entity {
 
   @belongsTo(() => User, {name: 'getCreator'})
   creator: string;
+
+  @belongsTo(() => Task, {name: 'getPreviousTask'})
+  previousTask: string;
 
   constructor(data?: Partial<Task>) {
     super(data);

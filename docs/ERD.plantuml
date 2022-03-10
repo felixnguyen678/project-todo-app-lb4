@@ -3,7 +3,7 @@
 object Task {
   -id : ObjectID <<generated>>
   --
-  ~projectId: ObjectID
+  ~project: ObjectID
   ~owner: ObjectID
   ~creator: ObjectID
   ~previousTask: ObjectID
