@@ -44,6 +44,9 @@ object User {
 object ProjectUser {
   ~project: ObjectID
   ~user: ObjectID
+  --
+  *createdAt: date
+  *updatedAt: date
 }
 
 User ||-right-o{ ProjectUser
