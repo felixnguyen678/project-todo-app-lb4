@@ -1,22 +1,16 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
 import {MongoDataSource} from '../datasources';
-import {Task, TaskRelations, User} from '../models';
-import {UserRepository} from './user.repository';
+import {Task, TaskRelations} from '../models';
 
 export class TaskRepository extends DefaultCrudRepository<
   Task,
   typeof Task.prototype.id,
   TaskRelations
 > {
-
-  public readonly hasOwner: BelongsToAccessor<User, typeof Task.prototype.id>;
-
   constructor(
-    @inject('datasources.mongo') dataSource: MongoDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
+    @inject('datasources.mongo') dataSource: MongoDataSource,
   ) {
     super(Task, dataSource);
-    this.hasOwner = this.createBelongsToAccessorFor('hasOwner', userRepositoryGetter,);
-    this.registerInclusionResolver('hasOwner', this.hasOwner.inclusionResolver);
   }
 }
