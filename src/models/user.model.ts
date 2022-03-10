@@ -1,5 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
-import {Role} from "../enums";
+import {Role, UserStatus} from "../enums";
 
 @model()
 export class User extends Entity {
@@ -29,11 +29,13 @@ export class User extends Entity {
 
   @property({
     type: 'string',
+    default: UserStatus.ACTIVE,
   })
   status?: string;
 
   @property({
     type: 'string',
+    default: Role.USER,
   })
   role?: string;
 
