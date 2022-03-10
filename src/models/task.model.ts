@@ -1,5 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {TaskStatus} from "../enums";
+import {User} from './user.model';
 
 @model()
 export class Task extends Entity {
@@ -49,6 +50,8 @@ export class Task extends Entity {
   })
   status?: string;
 
+  @belongsTo(() => User, {name: 'getOwner'})
+  owner: string;
 
   constructor(data?: Partial<Task>) {
     super(data);
