@@ -12,10 +12,14 @@ export class TaskRepository extends DefaultCrudRepository<
 
   public readonly getOwner: BelongsToAccessor<User, typeof Task.prototype.id>;
 
+  public readonly getCreator: BelongsToAccessor<User, typeof Task.prototype.id>;
+
   constructor(
     @inject('datasources.mongo') dataSource: MongoDataSource, @repository.getter('UserRepository') protected userRepositoryGetter: Getter<UserRepository>,
   ) {
     super(Task, dataSource);
+    this.getCreator = this.createBelongsToAccessorFor('getCreator', userRepositoryGetter,);
+    this.registerInclusionResolver('getCreator', this.getCreator.inclusionResolver);
     this.getOwner = this.createBelongsToAccessorFor('getOwner', userRepositoryGetter,);
     this.registerInclusionResolver('getOwner', this.getOwner.inclusionResolver);
   }

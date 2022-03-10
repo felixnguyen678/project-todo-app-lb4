@@ -30,9 +30,27 @@ export class TaskUserController {
       },
     },
   })
-  async getUser(
+  async getOwner(
     @param.path.string('id') id: typeof Task.prototype.id,
   ): Promise<User> {
     return this.taskRepository.getOwner(id);
+  }
+
+  @get('/tasks/{id}/creator', {
+    responses: {
+      '200': {
+        description: 'User belonging to Task',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(User)},
+          },
+        },
+      },
+    },
+  })
+  async getCreator(
+    @param.path.string('id') id: typeof Task.prototype.id,
+  ): Promise<User> {
+    return this.taskRepository.getCreator(id);
   }
 }

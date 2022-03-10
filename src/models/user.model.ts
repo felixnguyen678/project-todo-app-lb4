@@ -55,6 +55,9 @@ export class User extends Entity {
   @hasMany(() => Task, {keyTo: 'owner'})
   assignedTasks: Task[];
 
+  @hasMany(() => Task, {keyTo: 'creator'})
+  createdTasks: Task[];
+
   constructor(data?: Partial<User>) {
     super(data);
   }

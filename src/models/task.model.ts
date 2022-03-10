@@ -53,6 +53,9 @@ export class Task extends Entity {
   @belongsTo(() => User, {name: 'getOwner'})
   owner: string;
 
+  @belongsTo(() => User, {name: 'getCreator'})
+  creator: string;
+
   constructor(data?: Partial<Task>) {
     super(data);
   }
