@@ -5,8 +5,8 @@ object Task {
   --
   ~projectId: ObjectID
   ~owner: ObjectID
-  ~createdBy: ObjectID
-  ~isChildOf: ObjectID
+  ~creator: ObjectID
+  ~previousTask: ObjectID
   --
   *taskName : string
   *startDate: date
@@ -20,7 +20,7 @@ object Task {
 object Project {
   -id: ObjectID
   --
-  ~createdBy: objectID
+  ~creator: objectID
   --
   *projectName: string
   *description: string
