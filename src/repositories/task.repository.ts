@@ -3,7 +3,6 @@ import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/re
 import {MongoDataSource} from '../datasources';
 import {Task, TaskRelations, User, Project} from '../models';
 import {UserRepository} from './user.repository';
-import {TaskRepository} from './task.repository';
 import {ProjectRepository} from './project.repository';
 
 export class TaskRepository extends DefaultCrudRepository<

@@ -2,7 +2,6 @@ import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {TaskStatus} from "../enums";
 import {User} from './user.model';
 import {Project} from './project.model';
-import {Task} from './task.model';
 
 @model()
 export class Task extends Entity {

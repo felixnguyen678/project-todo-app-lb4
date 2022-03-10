@@ -52,6 +52,9 @@ export class Project extends Entity {
   @hasMany(() => Task)
   tasks: Task[];
 
+  @hasMany(() => ProjectUser)
+  projectUsers: ProjectUser[];
+
   constructor(data?: Partial<Project>) {
     super(data);
   }

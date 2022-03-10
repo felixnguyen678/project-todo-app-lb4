@@ -63,6 +63,9 @@ export class User extends Entity {
   @hasMany(() => Project, {keyTo: 'createdBy'})
   createdProjects: Project[];
 
+  @hasMany(() => ProjectUser)
+  projectUsers: ProjectUser[];
+
   constructor(data?: Partial<User>) {
     super(data);
   }

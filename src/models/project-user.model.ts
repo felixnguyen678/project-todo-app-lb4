@@ -23,6 +23,12 @@ export class ProjectUser extends Entity {
   })
   updatedAt?: string;
 
+  @belongsTo(() => Project)
+  projectId: string;
+
+  @belongsTo(() => User)
+  userId: string;
+
   constructor(data?: Partial<ProjectUser>) {
     super(data);
   }
