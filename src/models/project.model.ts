@@ -26,11 +26,13 @@ export class Project extends Entity {
 
   @property({
     type: 'boolean',
+    default: true,
   })
   isActive?: boolean;
 
   @property({
     type: 'boolean',
+    default: false
   })
   isDeleted?: boolean;
 

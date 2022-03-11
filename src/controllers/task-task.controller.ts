@@ -32,6 +32,7 @@ export class TaskTaskController {
   async getPreviousTask(
     @param.path.string('id') id: typeof Task.prototype.id,
   ): Promise<Task> {
-    return this.taskRepository.previousTask(id);
+    const task = await this.taskRepository.findById(id);
+    return this.taskRepository.findById(task.isLatterTaskOf);
   }
 }
